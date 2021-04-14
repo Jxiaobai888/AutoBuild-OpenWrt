@@ -91,7 +91,7 @@ jobs:
         make download -j$(nproc)
         find dl -size -1024c -exec ls -l {} \;
         find dl -size -1024c -exec rm -f {} \;
-- name : netdata汉化
+    - name : netdata汉化
       working-directory: ./openwrt 
       run: |
         cd package/lean
