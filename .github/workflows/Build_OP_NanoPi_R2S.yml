@@ -91,6 +91,25 @@ jobs:
         make download -j$(nproc)
         find dl -size -1024c -exec ls -l {} \;
         find dl -size -1024c -exec rm -f {} \;
+- name : netdata汉化
+      working-directory: ./openwrt 
+      run: |
+        cd package/lean
+        rm -rf luci-app-netdata
+        git clone https://github.com/sirpdboy/luci-app-netdata.git
+    
+    - name : agron主题
+      working-directory: ./openwrt
+      run: |
+       cd package/lean
+       rm -rf luci-theme-argon  
+       git clone -b 18.06 https://github.com/jerrykuku/luci-theme-argon.git 
+    - name : openclash
+      working-directory: ./openwrt
+      run: |
+       cd package/lean
+       git clone https://github.com/vernesong/Openclash
+    
     - name: Build firmware
       working-directory: ./openwrt
       run: |
@@ -102,33 +121,7 @@ jobs:
         name: OpenWrt
         path: openwrt/bin
   
-    - name : netdata汉化
-      working-directory: ./openwrt 
-      run: |
-        cd package/lean
-        rm -rf luci-app-netdata
-        git clone https://github.com/sirpdboy/luci-app-netdata.git
-    - name : bypass安装
-      working-directory: ./openwrt
-      run: |
-       cd package/lean
-       git clone git clone https://github.com/jerrykuku/lua-maxminddb
-       git clone https://github.com/garypang13/smartdns-le
-       git clone https://github.com/garypang13/luci-app-bypass
-       find package/*/ feeds/*/ -maxdepth 2 -path "*luci-app-bypass/Makefile" | xargs -i sed -i 's/shadowsocksr-libev-ssr-redir/shadowsocksr-libev-alt/g' {}
-       find package/*/ feeds/*/ -maxdepth 2 -path "*luci-app-bypass/Makefile" | xargs -i sed -i 's/shadowsocksr-libev-ssr-server/shadowsocksr-libev-server/g' {}
-    - name : agron主题
-      working-directory: ./openwrt
-      run: |
-       cd package/lean
-       rm -rf luci-theme-argon  
-       git clone -b 18.06 https://github.com/jerrykuku/luci-theme-argon.git 
-    - name : openclash
-      working-directory: ./openwrt
-      run: |
-       cd package/lean
-       git clone https://github.com/vernesong/OpenClash
-    
+   
      
       
      
