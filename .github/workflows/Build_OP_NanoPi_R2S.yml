@@ -71,11 +71,14 @@ jobs:
         ./scripts/feeds update -a
         ./scripts/feeds install -a
         ./scripts/feeds install -a
-    #- name: Import external feeds
-    #  working-directory: ./openwrt
-    #  run: |
-    #    git clone https://github.com/xiaorouji/openwrt-passwall.git package/lienol
-    #    git clone "your_github_link" package/"your_folder_name"      
+    - name: Import external feeds
+      working-directory: ./openwrt
+      run: |
+        git clone https://github.com/xiaorouji/openwrt-passwall.git package/lienol
+        git clone https://github.com/vernesong/OpenClash.git package/OpenClash
+        git clone https://github.com/garypang13/luci-app-bypass.git package/bypass
+        git clone git clone https://github.com/jerrykuku/lua-maxminddb.git package/lua-maxminddb
+        git clone https://github.com/garypang13/smartdns-le.git package/smartdns-le
 
     - name: Configuration Customization - Build_NanoPi_R2S
       env:
@@ -101,3 +104,30 @@ jobs:
       with:
         name: OpenWrt
         path: openwrt/bin
+    - name : argn_new主题
+      working-directory: ./openwrt
+      run: |
+      cd package/lean
+      rm -rf luci-theme-argon
+      git clone -b 18.06 https://github.com/jerrykuku/luci-theme-argon.git
+   - name : netdata汉化
+     working-directory: ./openwrt 
+     run: |
+     cd package/lean
+     rm -rf luci-app-netdata
+     git clone https://github.com/sirpdboy/luci-app-netdata.git
+   - name : bypass安装
+    working-girectory: ./openwrt
+    run: |
+    cd package/lean
+    git clone git clone https://github.com/jerrykuku/lua-maxminddb.git
+    git clone https://github.com/garypang13/smartdns-le.git
+    git clone https://github.com/garypang13/luci-app-bypass.git
+    find package/*/ feeds/*/ -maxdepth 2 -path "*luci-app-bypass/Makefile" | xargs -i sed -i 's/shadowsocksr-libev-ssr-redir/shadowsocksr-libev-alt/g' {}
+    find package/*/ feeds/*/ -maxdepth 2 -path "*luci-app-bypass/Makefile" | xargs -i sed -i 's/shadowsocksr-libev-ssr-server/shadowsocksr-libev-server/g' {}
+    
+    
+    
+     
+      
+     
