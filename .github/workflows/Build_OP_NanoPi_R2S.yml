@@ -75,8 +75,9 @@ jobs:
       working-directory: ./openwrt
       run: |
         git clone https://github.com/xiaorouji/openwrt-passwall.git package/lienol
-        
-
+        git clone https://github.com/vernesong/OpenClash.git package/OpenClash
+        git clone https://github.com/garypang13/luci-app-bypass.git package/bypass
+        git clone https://github.com/jerrykuku/luci-theme-argon.git package/argon  
     - name: Configuration Customization - Build_NanoPi_R2S
       env:
         CONFIG_FILE: 'NanoPi_R2S.config'
@@ -91,25 +92,6 @@ jobs:
         make download -j$(nproc)
         find dl -size -1024c -exec ls -l {} \;
         find dl -size -1024c -exec rm -f {} \;
-    - name : netdata汉化
-      working-directory: ./openwrt 
-      run: |
-        cd package/lean
-        rm -rf luci-app-netdata
-        git clone https://github.com/sirpdboy/luci-app-netdata.git
-    
-    - name : agron主题
-      working-directory: ./openwrt
-      run: |
-       cd package/lean
-       rm -rf luci-theme-argon  
-       git clone -b 18.06 https://github.com/jerrykuku/luci-theme-argon.git 
-    - name : openclash
-      working-directory: ./openwrt
-      run: |
-       cd package/lean
-       git clone https://github.com/vernesong/Openclash
-    
     - name: Build firmware
       working-directory: ./openwrt
       run: |
